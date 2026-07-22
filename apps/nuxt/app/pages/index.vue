@@ -46,7 +46,7 @@ function initAudio() {
   if (bgMusicEl) return
   // 背景音乐：轻快舒缓的循环曲
   bgMusicEl = new Audio()
-  bgMusicEl.src = 'https://cdn.pixabay.com/audio/2022/03/15/audio_8e9a3d3d3a.mp3'
+  bgMusicEl.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
   bgMusicEl.loop = true
   bgMusicEl.volume = 0.15
   bgMusicEl.preload = 'auto'
