@@ -1,133 +1,81 @@
-<h1 align=center>
-  <img src="https://github.com/user-attachments/assets/9d626e0f-0601-4640-8981-ad66d8ac4853" alt="TypeWords" style="width: 500px;"/>
-</h1>
+<div align="center">
 
-<p align="center">
-  <a href="/README.md">English</a> |
-  <a href="/docs/README.es.md">Español</a> |
-  <a href="/docs/README.de.md">Deutsch</a> |
-  <a href="/docs/README.fr.md">Français</a> |
-  <a href="/docs/README.pt.md">Português</a> |
-  <a href="/docs/README.ru.md">Русский</a> |
-  <a href="/docs/README.uk.md">Українська</a> |
-  <a href="/docs/README.ja.md">日本語</a> |
-  <a href="/docs/README.ko.md">한국인</a> |
-  <a href="/docs/README.th.md">ไทย</a> |
-  <a href="/docs/README.vi.md">Tiếng Việt</a> |
-  <a href="/docs/README.id.md">Bahasa Indonesia</a> |
-  <a href="/docs/README.zh-TW.md">繁體中文</a> |
-  <a href="/docs/README.zh-CN.md">简体中文</a> 
-</p>
+# ⌨️ FluType
 
-<p align="center">
-  <b>Learn English, one keystroke at a time; smarter memorization, more efficient learning - an open-source word and article practice tool</b>
-</p>
+### 打字学英语，开口就流利
 
-## Online Access
+结合 FSRS 记忆算法 + 真人录音 + 打字肌肉记忆，让每一次按键都成为学习的一部分。
 
-<https://typewords.cc>
+</div>
 
-<img width="1920" height="1440" alt="practice words" src="/apps/nuxt/public/imgs/words.png" />
-<img width="1920" height="1440" alt="practice articles" src="/apps/nuxt/public/imgs/articles.png" />
+---
 
-## Features
+## 🌐 在线体验
 
-### Word Practice
+**https://zswlht.github.io/FluType/**
 
-- Practice modes: Follow-along / Dictation / Self-test / Spelling from memory
-- Smart mode: Automatically calculates learning words based on memory curves, deepening memory through dictation
-- Free mode: No restrictions, plan your own learning
-- Provides phonetics, pronunciation (American/British), example sentences, phrases, synonyms, root words, etymology, error statistics, and more
+<div align="center">
+  <img width="1920" alt="FluType 首页" src="apps/nuxt/public/imgs/words.png" />
+</div>
 
-### Article Memorization
+## ✨ 功能特色
 
-- Built-in classic textbooks; you can also add or import articles with one-click translation and bilingual comparison
-- Follow-along + dictation dual modes, sentence-by-sentence input with automatic pronunciation for more efficient memorization
-- Supports listening while writing from memory to reinforce learning
+### 🔤 单词练习
+- 50+ 词典，FSRS 智能复习算法，打字即记忆
+- 多种练习模式：跟打 / 默写 / 自测 / 听写
+- 提供音标、发音（美音/英音）、例句、短语、同义词、词根、词源等
 
-### Favorites, Wrong Words, Mastered
+### 📖 文章练习
+- 内置新概念英语等经典教材，真人录音
+- 跟打 + 默写双模式，逐句输入、自动发音
+- 一键翻译、双语对照，边听边写强化记忆
 
-- Words typed incorrectly while learning are automatically added to your wrong word book for later review
-- Actively add words to mastered to automatically skip them in future sessions
-- Add words to favorites for consolidation and review
+### 💬 句子练习
+- 从文章提取的句子集，专注单句听说训练
+- 支持自动跳过符号/数字/人名，专注核心内容
 
-### Highly Customizable
+### 🎯 其他特色
+- **FSRS 记忆算法**：科学间隔重复，记得牢不遗忘
+- **打字即记忆**：边打边记，肌肉记忆加深印象
+- **真人发音**：原文录音 + 词典发音双重支持
+- **离线可用**：数据本地保存，无需联网也能学
+- **完全免费**：开源项目，无广告无内购
 
-- Rich keyboard sound effects
-- Customizable shortcuts
-- Highly configurable settings
+## 🛠️ 技术栈
 
-### Clean and Efficient
+- **框架**：Nuxt 3 + Vue 3 + TypeScript
+- **构建**：Vite + pnpm workspace（monorepo）
+- **状态管理**：Pinia + Reactivity Transform
+- **记忆算法**：FSRS（Free Spaced Repetition Scheduler）
+- **部署**：GitHub Pages（静态生成）
 
-- Clean design, modern UI, ad-free
-- Refreshing interface, simple operation
-- No forced subscription to any platform
-
-### Vocabulary Library
-
-Built-in commonly used vocabulary including CET-4, CET-6, GMAT, GRE, IELTS, SAT, TOEFL, Graduate English, TEM-4, TEM-8, and more.
-Designed to meet most users' vocabulary learning needs. Community contributions of additional vocabulary are welcome.
-
-## Running the Project
-
-#### Note: This project can run standalone with data saved locally. Manual backup is required when switching devices; this does not affect normal usage.
-
-### Option 1: Running from Source
-
-This project is built with `Nuxt` and requires a Node.js environment.
-
-1. Install NodeJS, refer to the [official documentation](https://nodejs.org/en/download)
-2. The project is large. It's recommended to use `git clone --depth 1 https://github.com/zyronon/TypeWords.git` to clone only the latest commit. GitHub's Download ZIP feature will not work properly.
-3. In the project root directory, open a terminal and run `pnpm install` to download dependencies.
-4. Run `pnpm run dev` to start the project. The default address is [`http://localhost:5567`](http://localhost:5567)
-5. Open [`http://localhost:5567`](http://localhost:5567) in your browser to access the project.
-6. Run `pnpm run generate` to build the project files.
-
-### Option 2: Using Docker
-
-The easiest way to run TypeWords is using Docker:
+## 🚀 本地开发
 
 ```bash
-# Pull the image from Docker Hub
-docker pull zyronon/typewords:latest
+# 安装依赖
+pnpm install
 
-# Run the container
-docker run -d -p 3000:80 --name typewords zyronon/typewords:latest
+# 启动开发服务器
+pnpm --filter @typewords/nuxt dev
+
+# 构建静态站点
+pnpm --filter @typewords/nuxt exec nuxt generate
 ```
 
-Then open [`http://localhost:3000`](http://localhost:3000) in your browser to access the project.
+## 📁 项目结构
 
-Or use Docker Compose:
-
-```bash
-# Start with docker-compose
-docker-compose up -d
-
-# Stop the service
-docker-compose down
+```
+FluType/
+├── apps/
+│   └── nuxt/              # Nuxt 3 主应用
+├── packages/
+│   ├── core/              # 核心业务逻辑、组件
+│   ├── base/              # 基础 UI 组件库
+│   ├── libs/              # 第三方库封装
+│   └── utils/             # 工具函数
+└── package.json
 ```
 
-Or build and run locally:
+## 📄 License
 
-```bash
-# Build the Docker image
-docker build -t typewords .
-
-# Run the container
-docker run -d -p 3000:80 --name typewords typewords
-```
-
-## Features and Suggestions
-
-The project is currently in early development, with new features being added continuously. If you have any suggestions or feature requests, feel free to open an `Issue`.
-If you like the design philosophy of this software, please submit a `PR`. Thank you for your support!
-
-## Contributing Guide
-
-[Contributing Guidelines](/docs/CONTRIBUTING.md)
-
-If you're interested in this project, we welcome your contributions and will provide as much help as possible.
-
-Before contributing, please communicate with the developers to avoid code conflicts.
-
-Thank you again for your contributions!
+MIT
