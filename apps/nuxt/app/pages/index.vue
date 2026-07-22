@@ -131,7 +131,7 @@ useSeoMeta({
   ogTitle: 'FluType - 打字学英语，开口就流利',
   description: '通过打字练习单词、文章、句子，结合 FSRS 记忆算法，让英语学习更高效、更有趣。',
   ogDescription: '通过打字练习单词、文章、句子，结合 FSRS 记忆算法，让英语学习更高效、更有趣。',
-  ogUrl: 'https://typewords.cc/',
+  ogUrl: 'https://zswlht.github.io/FluType/',
 })
 </script>
 

@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://typewords.cc/sitemap.xml
+Sitemap: https://zswlht.github.io/FluType/sitemap.xml

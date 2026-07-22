@@ -5,13 +5,13 @@
   --color-reverse-white: white;
   --color-reverse-black: black;
   --bg-history: white;
-  --color-item-border: rgb(226, 226, 226);
+  --color-item-border: #ffe0c2;
 
   --color-tooltip-bg: white;
   --color-font-2: rgb(46, 46, 46);
-  --color-font-3: rgb(102, 116, 135);
+  --color-font-3: #6b5d4f;
   --color-font-active-1: white;
-  --color-scrollbar: #c1c1c1;
+  --color-scrollbar: #ffc89a;
 
   --color-sub-gray: #c0bfbf;
   --aside-width: 4.5rem;
@@ -30,73 +30,72 @@
   --word-panel-margin-left: calc(50vw + var(--aside-width) / 2 + var(--toolbar-width) / 2 + 1rem);
   --anim-time: 0.5s;
 
-  --color-input-color: black;
-  --color-input-bg: white;
-  --color-input-border: #bfbfbf;
-  --color-input-icon: #d3d4d7;
+  --color-input-color: #2d2418;
+  --color-input-bg: #fff8f0;
+  --color-input-border: #ffe0c2;
+  --color-input-icon: #ffa726;
 
-  --color-textarea-bg: white;
-  --color-article: black;
+  --color-textarea-bg: #fff8f0;
+  --color-article: #2d2418;
 
 
-  --font-family: -apple-system, sans-serif;
-  --word-font-family: ui-monospace, sans-serif;
+  --font-family: 'Comic Sans MS', 'Marker Felt', 'Quicksand', -apple-system, system-ui, sans-serif;
+  --word-font-family: 'Comic Sans MS', ui-monospace, monospace;
   --en-article-family: Georgia, sans-serif;
   --zh-article-family: 'Songti SC', 'SimSun', 'Noto Serif CJK SC', serif;
 
-  --color-primary: #e6e8eb;
+  --color-primary: #fff8f0;
   --color-primary2: white;
-  --color-second: rgb(247, 247, 247);
-  --color-third: rgb(228, 230, 232);
-  --color-fourth: rgb(218, 220, 222);
+  --color-second: #ffffff;
+  --color-third: #fff0e0;
+  --color-fourth: #ffe0c2;
   --color-fifth: rgb(253, 246, 236);
 
-  //--color-card-active: #FED7AA;
-  --color-card-active: rgb(253, 246, 236);
-  --color-sub-text: gray;
-  --color-main-text: rgb(91, 91, 91);
-  --color-select-bg: rgb(12, 140, 233);
+  --color-card-active: #fff0e0;
+  --color-sub-text: #6b5d4f;
+  --color-main-text: #2d2418;
+  --color-select-bg: #ff6b6b;
 
-  --color-progress-bar: #d1d5df;
+  --color-progress-bar: #ffd166;
 
-  --color-label-bg: whitesmoke;
-  --color-link: #2563eb;
+  --color-label-bg: #fff0e0;
+  --color-link: #ff6b6b;
 
   --color-card-bg: white;
 
   --bg-card-primary: white;
-  --bg-card-secend: rgb(247, 247, 247);
+  --bg-card-secend: #fff8f0;
 
-  --bg-book: rgb(226 232 240);
+  --bg-book: #ffd9b3;
 
-  --color-line: rgb(226, 226, 226);
+  --color-line: #ffe0c2;
 
-  --color-translate-main: black;
-  --color-translate-second: #818181;
+  --color-translate-main: #2d2418;
+  --color-translate-second: #6b5d4f;
 
   --book-width: 9.6rem;
-  --book-border: rgb(225, 217, 217);
+  --book-border: #ffe0c2;
 }
 
 html.dark {
   --color-reverse-white: black;
   --color-reverse-black: white;
 
-  --color-primary: #202124;
-  --color-second: #292a2d;
-  --color-third: #35373a;
-  --color-fourth: rgb(70, 70, 70);
+  --color-primary: #1a1410;
+  --color-second: #2a1f17;
+  --color-third: #352821;
+  --color-fourth: #3d2f24;
   --color-fifth: rgb(84, 84, 84);
 
-  --color-card-active: rgb(84, 84, 84);
-  --color-sub-text: #b8b8b8;
-  --color-main-text: rgba(249, 250, 251, 0.8);
-  --color-select-bg: rgb(147, 173, 227);
+  --color-card-active: #3d2f24;
+  --color-sub-text: #b8a589;
+  --color-main-text: #f5e6d3;
+  --color-select-bg: #ff6b6b;
 
   --bg-history: rgb(43, 45, 48);
-  --color-item-border: rgb(41, 41, 41);
+  --color-item-border: #3d2f24;
 
-  --color-tooltip-bg: #35373a;
+  --color-tooltip-bg: #2a1f17;
   --color-font-2: rgba(255, 255, 255, 0.5);
   --color-font-3: rgba(255, 255, 255, 0.3);
 

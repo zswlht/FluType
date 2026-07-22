@@ -2,11 +2,10 @@ import { offset } from '@floating-ui/dom'
 //这里合并导入，打包会报错
 import { ShortcutKey, WordPracticeMode, WordPracticeStage } from '../types/enum.ts'
 
-export const GITHUB = 'https://github.com/zyronon/TypeWords'
-export const Host = 'typewords.cc'
-export const Old_Host = '2study.top'
-export const EMAIL = 'zyronon@163.com'
-export const Origin = `https://${Host}`
+export const GITHUB = 'https://github.com/zswlht/FluType'
+export const Host = 'zswlht.github.io'
+export const EMAIL = 'flutype@app.com'
+export const Origin = `https://${Host}/FluType`
 export const APP_NAME = 'FluType'
 export const IS_DEV = import.meta.env.MODE === 'development'
 
@@ -15,12 +14,8 @@ const common = {
 }
 const map = {
   DEV: {
-    // API: 'http://localhost/',
     API: 'https://api.typewords.cc/',
-    // RESOURCE_URL: 'https://dicts.2study.top/',
-    // RESOURCE_URL: '/',
     RESOURCE_URL: 'https://files.typewords.cc/',
-    // RESOURCE_URL: 'http://localhost/static/',
     LIBS_URL: 'https://libs.typewords.cc/',
   },
 }

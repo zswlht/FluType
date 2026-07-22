@@ -1,11 +1,11 @@
 {
-  "name": "Type Words - 词文记 | 单词跟打 · 文章跟打",
-  "short_name": "",
+  "name": "FluType - 打字学英语，开口就流利",
+  "short_name": "FluType",
   "start_url": ".",
-  "description": "在线英语打字练习平台，支持单词跟打与文章跟打，帮助提升打字速度与英语学习效率。",
+  "description": "通过打字练习单词、文章、句子，结合 FSRS 记忆算法，让英语学习更高效、更有趣。",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#fff8f0",
+  "theme_color": "#ff6b6b",
   "icons": [
     {
       "src": "favicon.ico",

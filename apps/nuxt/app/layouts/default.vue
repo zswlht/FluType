@@ -3,7 +3,6 @@ import { BaseIcon, ToastComponent } from '@typewords/base'
 import Logo from '@typewords/core/components/Logo.vue'
 import MigrateDialog from '@typewords/core/components/dialog/MigrateDialog.vue'
 import IeDialog from '@typewords/core/components/dialog/IeDialog.vue'
-import { Origin } from '@typewords/core/config/env'
 import useTheme from '@typewords/core/hooks/theme.ts'
 import { useRuntimeStore } from '@typewords/core/stores/runtime.ts'
 import { useSettingStore } from '@typewords/core/stores/setting.ts'
@@ -59,13 +58,6 @@ const showIcon = $computed(() => {
 
 onMounted(() => {
   init()
-
-  if (new URLSearchParams(window.location.search).get('from_old_site') === '1' && location.origin === Origin) {
-    if (localStorage.getItem('__migrated_from_2study_top__')) return
-    setTimeout(() => {
-      showTransfer = true
-    }, 1000)
-  }
 
   window.umami?.track('sync', { check: Supabase.check() })
 })
@@ -217,7 +209,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: rgb(0 0 0 / 3%) 0px 0px 12px 0px;
+  box-shadow: 0 0 12px rgba(255, 167, 38, 0.1);
   width: var(--aside-width);
   z-index: 2;
 
@@ -227,12 +219,19 @@ onMounted(() => {
     }
   }
   .row {
-    @apply cp rounded-md text p-2 my-2 flex items-center gap-2 relative shrink-0 hover:bg-fourth;
-    transition: all 0.5s;
+    @apply cp rounded-xl text p-2 my-2 flex items-center gap-2 relative shrink-0 hover:bg-fourth;
+    transition: all 0.3s cubic-bezier(.34, 1.56, .64, 1);
     color: var(--color-main-text);
+    font-weight: 600;
+
+    &:hover {
+      transform: translateX(2px);
+    }
 
     &.router-link-active {
-      background: var(--color-fourth);
+      background: linear-gradient(135deg, #ffd166, #ff6b6b);
+      color: white;
+      box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
     }
 
     svg {
@@ -249,7 +248,7 @@ onMounted(() => {
   right: 0;
   background: var(--color-second);
   border-bottom: 1px solid var(--color-item-border);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(255, 167, 38, 0.12);
   z-index: 1000;
   transition: all 0.3s ease;
 
@@ -280,6 +279,7 @@ onMounted(() => {
         font-size: 0.7rem;
         color: var(--color-main-text);
         text-align: center;
+        font-weight: 600;
       }
 
       &.active {

@@ -48,7 +48,7 @@ export const RELEASE_NOTES: ReleaseVersion[] = [
     version: 1,
     date: '2025-07-19',
     title: '首次发布',
-    summary: 'TypeWords 1.0 正式上线',
+    summary: 'FluType 1.0 正式上线',
     features: [{ type: 'new', title: '核心打字练习', desc: '支持单词与文章的键盘打字练习' }],
   },
 ]

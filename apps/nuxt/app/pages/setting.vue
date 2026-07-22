@@ -29,7 +29,6 @@ import {
   DictId,
   LIB_JS_URL,
   LOCAL_FILE_KEY,
-  Old_Host,
   Origin,
 } from '@typewords/core/config/env'
 import { get, set } from 'idb-keyval'
@@ -320,7 +319,6 @@ async function importData(e) {
   importLoading = false
 }
 
-let isNewHost = $ref(false)
 let showTransfer = $ref(false)
 let showBackupGate = $ref(false)
 let showHistoryDialog = $ref(false)
@@ -438,10 +436,6 @@ async function onSbFirstSyncChoice(action: 'push_local' | 'pull_remote') {
     sbSyncChoiceLoading = false
   }
 }
-
-onMounted(() => {
-  isNewHost = window.location.host !== Old_Host
-})
 
 function transferOk() {
   setTimeout(() => {
@@ -653,16 +647,6 @@ function disable360(){
             <i18n-t keypath="import_overwrite_warning" tag="span">
               <strong class="color-red">{{ $t('complete_overflow') }}</strong>
             </i18n-t>
-            <!--            新网站同步-->
-            <template v-if="isNewHost">
-              <div class="line my-3"></div>
-              <SettingItem :title="$t('migrate_2study_title')">
-                <BaseButton size="large"  @click="openGate('transfer')">{{ $t('migrate_btn') }}</BaseButton>
-              </SettingItem>
-              <i18n-t keypath="migrate_overwrite_warning" tag="span">
-                <strong class="color-red">{{ $t('complete_overflow') }}</strong>
-              </i18n-t>
-            </template>
 
             <div class="line my-3"></div>
             <SettingItem :title="$t('other')"> </SettingItem>

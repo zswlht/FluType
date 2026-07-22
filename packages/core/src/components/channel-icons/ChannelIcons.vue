@@ -5,6 +5,7 @@ import ShareIcon from './ShareIcon.vue'
 import WeChat from './WeChat.vue'
 import Github from './Github.vue'
 import { withAppBaseURL } from '../../utils/base-url'
+import { EMAIL } from '../../config/env'
 
 withDefaults(
   defineProps<{
@@ -43,10 +44,10 @@ const qqQrSrc = withAppBaseURL('/imgs/channel/qq.jpg')
     </BaseIcon>
 
     <a
-      href="https://x.com/typewords2"
+      href="https://x.com/FluType"
       target="_blank"
       rel="noreferrer"
-      :aria-label="$t('follow_x_account', { x_account: 'typewords2' })"
+      :aria-label="$t('follow_x_account', { x_account: 'FluType' })"
     >
       <BaseIcon :title="$t('twitter')">
         <IconRiTwitterFill class="color-blue" />
@@ -54,10 +55,10 @@ const qqQrSrc = withAppBaseURL('/imgs/channel/qq.jpg')
     </a>
 
     <a
-      href="mailto:zyronon@163.com"
+      :href="`mailto:${EMAIL}`"
       target="_blank"
       rel="noreferrer"
-      :aria-label="$t('send_email', { email: 'zyronon@163.com' })"
+      :aria-label="$t('send_email', { email: EMAIL })"
     >
       <BaseIcon :title="$t('email')">
         <IconMaterialSymbolsMail class="color-blue" />

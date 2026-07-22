@@ -35,8 +35,6 @@ import {
   AppEnv,
   DICT_LIST,
   LIB_JS_URL,
-  Old_Host,
-  Origin,
   TourConfig,
 } from '@typewords/core/config/env.ts'
 import { myDictList } from '@typewords/core/apis'
@@ -335,11 +333,6 @@ const totalDay = $computed(() => {
   return set.size
 })
 
-let isOldHost = $ref(false)
-onMounted(() => {
-  isOldHost = window.location.host === Old_Host
-})
-
 onUnmounted(() => {
   document.removeEventListener('visibilitychange', onvisibilitychange)
 })
@@ -350,12 +343,6 @@ const { data: recommendDictList, isFetching } = useFetch(resourceWrap(DICT_LIST.
 <template>
   <BasePage>
     <ReleaseBanner />
-
-    <div class="my-100 text-4xl font-bold text-red" v-if="isOldHost">
-      已启用新域名
-      <a class="mr-4" :href="`${Origin}/sentences?from_old_site=1`">{{ Origin }}</a
-      >当前 2study.top 域名将在 7 月 3 号停止使用
-    </div>
 
     <div class="card flex flex-col md:flex-row gap-4">
       <div class="flex-1 flex flex-col justify-between">

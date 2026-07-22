@@ -17,7 +17,7 @@ try {
   latestCommitTime = 'unknown'
 }
 
-const siteOrigin = (process.env.ORIGIN || 'https://typewords.cc').replace(/\/$/, '')
+const siteOrigin = (process.env.ORIGIN || 'https://zswlht.github.io/FluType').replace(/\/$/, '')
 
 function normalizeBaseURL(baseURL: string = '/') {
   if (!baseURL) return '/'
@@ -54,54 +54,53 @@ export default defineNuxtConfig({
     baseURL: appBaseURL,
     // keepalive: true,
     head: {
-      title: 'Type Words — 免费英语单词练习 | Free English Typing Practice', // default fallback title
+      title: 'FluType — 打字学英语，开口就流利', // default fallback title
       htmlAttrs: {
         lang: 'zh-CN',
       },
       meta: [
         { charset: 'UTF-8' },
         //百度站长HTML标签验证
-        { name: 'baidu-site-verification', content: 'codeva-NoSMtV313P' },
         //搜索引擎描述
         {
           name: 'description',
           content:
-            'Type Words 官方网站 - 在线英语练习平台，支持单词、文章跟打练习，提升英语学习效率，电脑上背单词。Practice English, one strike, one step forward',
+            'FluType - 通过打字练习单词、文章、句子，结合 FSRS 记忆算法，让英语学习更高效、更有趣。',
         },
         //关键词（可选，搜索引擎基本不用，但能补充信息）
         {
           name: 'keywords',
           content:
-            'Type Words, Typing Word, Type Words 官网, 电脑上背单词 , 英语打字练习, 单词跟打, 文章跟打, 键盘练习, 英语学习, 文章学习, 打字练习软件, 单词记忆工具, 英语学习软件, 背单词神器, 英语肌肉记忆, 键盘工作者, 免费英语学习, 音标发音, 默写练习, 在线学英语, CET-4, CET-6, TOEFL, IELTS, GRE, GMAT, SAT, 考研英语, 专四专八, 程序员英语, JavaScript API, Node.js API, Java API, Linux命令, 编程词汇, 技术英语, VSCode插件, 开源项目, GitHub趋势榜, V2EX热搜, Gitee GVP, 少数派推荐, 英语打字训练, WPM统计, 准确率分析, 商务英语, BEC, 雅思听力, 日语学习, 多语言学习, 英语口语练习, 单词拼写训练',
+            'FluType, 打字学英语, 英语打字练习, 单词练习, 文章练习, 句子练习, FSRS记忆算法, 英语学习, 背单词, 打字练习',
         },
-        { name: 'author', content: 'zyronon' },
+        { name: 'author', content: 'FluType' },
         { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
 
         //Open Graph（用于社交媒体分享，微信/QQ/知乎/Facebook 等）
-        { property: 'og:title', content: 'Type Words 官网 - 英语打字练习平台' },
+        { property: 'og:title', content: 'FluType - 打字学英语，开口就流利' },
         {
           property: 'og:description',
           content:
-            'Type Words 官方网站 - 在线英语练习平台，支持单词、文章跟打练习，提升英语学习效率，电脑上背单词。Practice English, one strike, one step forward',
+            'FluType - 通过打字练习单词、文章、句子，结合 FSRS 记忆算法，让英语学习更高效、更有趣。',
         },
         { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: 'https://typewords.cc/' },
-        { property: 'og:image', content: 'https://typewords.cc/imgs/og-image.png' },
+        { property: 'og:url', content: 'https://zswlht.github.io/FluType/' },
+        { property: 'og:image', content: '/imgs/og-image.png' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
 
         // Twitter Card（用于 Twitter 分享）
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Type Words 官网 - 英语打字练习平台' },
+        { name: 'twitter:title', content: 'FluType - 打字学英语，开口就流利' },
         {
           name: 'twitter:description',
           content:
-            'Type Words 官方网站 - 在线英语练习平台，支持单词、文章跟打练习，提升英语学习效率，电脑上背单词。Practice English, one strike, one step forward',
+            'FluType - 通过打字练习单词、文章、句子，结合 FSRS 记忆算法，让英语学习更高效、更有趣。',
         },
-        { name: 'twitter:image', content: 'https://typewords.cc/imgs/og-image.png' },
+        { name: 'twitter:image', content: '/imgs/og-image.png' },
 
         //设置浏览器地址栏颜色（在 Android Chrome 特别明显
-        { name: 'theme-color', content: '#818CF8' },
+        { name: 'theme-color', content: '#ff6b6b' },
         // 阻止 iOS 自动把数字识别为电话号码
         // HandheldFriendly 和 MobileOptimized 是旧手机浏览器的优化提示（现在作用不大）。
         { name: 'format-detection', content: 'telephone=no' },
@@ -114,7 +113,7 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'canonical', href: 'https://typewords.cc/' },
+        { rel: 'canonical', href: 'https://zswlht.github.io/FluType/' },
         //苹果设备（iOS Safari）在用户添加到主屏时显示的图标
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon.ico' },
         { rel: 'manifest', href: '/manifest.json' },
@@ -125,13 +124,13 @@ export default defineNuxtConfig({
           innerHTML: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebSite',
-            name: 'TypeWords',
-            alternateName: ['Type Words', '词文记'],
-            url: 'https://typewords.cc/',
-            sameAs: ['https://github.com/zyronon/typing-word'],
+            name: 'FluType',
+            alternateName: 'FluType',
+            url: 'https://zswlht.github.io/FluType/',
+            sameAs: ['https://github.com/zswlht/FluType'],
             potentialAction: {
               '@type': 'SearchAction',
-              target: 'https://typewords.cc/words?q={search_term_string}',
+              target: 'https://zswlht.github.io/FluType/words?q={search_term_string}',
               'query-input': 'required name=search_term_string',
             },
           }),
@@ -141,13 +140,13 @@ export default defineNuxtConfig({
           innerHTML: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'SoftwareApplication',
-            name: 'TypeWords',
-            alternateName: '词文记',
+            name: 'FluType',
+            alternateName: 'FluType',
             applicationCategory: 'EducationApplication',
             operatingSystem: 'Web, VSCode Extension',
             description: 'Free English typing practice and vocabulary builder. Practice words and articles, powered by FSRS spaced repetition.',
-            url: 'https://typewords.cc/',
-            screenshot: 'https://typewords.cc/imgs/og-image.png',
+            url: 'https://zswlht.github.io/FluType/',
+            screenshot: '/imgs/og-image.png',
             offers: {
               '@type': 'Offer',
               price: '0',
@@ -271,8 +270,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: process.env.API_BASE || 'http://localhost/',
-      origin: process.env.ORIGIN || 'https://typewords.cc',
-      host: process.env.HOST || 'typewords.cc',
+      origin: process.env.ORIGIN || 'https://zswlht.github.io/FluType',
+      host: process.env.HOST || 'zswlht.github.io',
       passwordRsaPublicKey: process.env.VITE_PASSWORD_RSA_PUBLIC_KEY || '',
       latestCommitHash: latestCommitHash + (process.env.NODE_ENV === 'production' ? '' : ' (dev)'),
       latestCommitTime: latestCommitTime,
