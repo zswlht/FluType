@@ -2,7 +2,6 @@
 import { APP_NAME, GITHUB, Origin } from '@typewords/core/config/env.ts'
 import { BaseIcon } from '@typewords/base'
 import { getSystemTheme, listenToSystemThemeChange, setTheme, swapTheme } from '@typewords/core/hooks/theme.ts'
-import { usePlayBeep, usePlayCorrect, usePlayKeyboardAudio } from '@typewords/core/hooks/sound.ts'
 
 definePageMeta({ layout: 'empty' })
 
@@ -34,7 +33,7 @@ function startBlink() {
   }, 530)
 }
 
-// 打字演示
+// 打字演示（自动循环）
 const demoWords = $computed(() => [
   { word: 'hello', emoji: '👋', trans: '你好' },
   { word: 'learn', emoji: '📚', trans: '学习' },
@@ -44,50 +43,49 @@ const demoWords = $computed(() => [
 let demoIdx = $ref(0)
 let demoInput = $ref('')
 let demoDone = $ref(false)
-let demoShake = $ref(false)
 const demoWord = $computed(() => demoWords[demoIdx])
 const demoRemain = $computed(() => demoWord.word.slice(demoInput.length))
 
-function demoNext() {
-  demoDone = false
+let demoTimer: ReturnType<typeof setTimeout> | null = null
+
+function demoReset() {
   demoInput = ''
+  demoDone = false
+}
+
+function demoNext() {
+  demoReset()
   demoIdx = (demoIdx + 1) % demoWords.length
 }
 
-const playDemoKeyboard = usePlayKeyboardAudio()
-const playDemoBeep = usePlayBeep()
-const playDemoCorrect = usePlayCorrect()
-
-function onDemoKey(e: KeyboardEvent) {
+// 自动逐字输入演示
+function autoTypeStep() {
   if (demoDone) {
-    if (e.code === 'Space') {
-      e.preventDefault()
-      demoNext()
-    }
+    demoTimer = setTimeout(() => { demoNext(); autoTypeStep() }, 1500)
     return
   }
-  if (e.key.length !== 1) return
-  e.preventDefault()
   const target = demoWord.word
-  if (e.key.toLowerCase() === target[demoInput.length].toLowerCase()) {
-    demoInput += e.key
-    playDemoKeyboard()
-    if (demoInput.length === target.length) {
-      demoDone = true
-      playDemoCorrect()
-    }
+  if (demoInput.length < target.length) {
+    demoInput += target[demoInput.length]
+    demoTimer = setTimeout(autoTypeStep, 280)
   } else {
-    demoShake = true
-    playDemoBeep()
-    setTimeout(() => { demoShake = false }, 400)
+    demoDone = true
+    demoTimer = setTimeout(() => { demoNext(); autoTypeStep() }, 1500)
   }
 }
 
-let demoFocused = $ref(false)
-const demoCardRef = $ref<HTMLElement | null>(null)
-function focusDemo() {
-  demoCardRef?.focus()
+function startAutoDemo() {
+  if (demoTimer) clearTimeout(demoTimer)
+  autoTypeStep()
 }
+
+onMounted(() => {
+  startAutoDemo()
+})
+
+onUnmounted(() => {
+  if (demoTimer) clearTimeout(demoTimer)
+})
 
 // 模块卡片
 const modules = $computed(() => [
@@ -220,36 +218,28 @@ useSeoMeta({
               </button>
               <a :href="GITHUB" target="_blank" class="btn-ghost">
                 <span>⭐</span>
-                <span>GitHub 8K+</span>
+                <span>GitHub</span>
               </a>
             </div>
           </div>
 
           <!-- 右：演示卡片 -->
           <div class="w-full lg:w-[420px] shrink-0">
-            <div
-              ref="demoCardRef"
-              class="demo-card"
-              :class="{ focused: demoFocused, shake: demoShake }"
-              tabindex="0"
-              @focus="demoFocused = true"
-              @blur="demoFocused = false"
-              @keydown="onDemoKey"
-            >
+            <div class="demo-card">
               <div class="demo-header">
                 <span class="demo-dot dot-r"></span>
                 <span class="demo-dot dot-y"></span>
                 <span class="demo-dot dot-g"></span>
-                <span class="demo-label">{{ demoFocused ? '● 输入中…' : '点我开始' }}</span>
+                <span class="demo-label">● 自动演示中</span>
               </div>
-              <div class="demo-body" @click="focusDemo">
+              <div class="demo-body">
                 <div class="demo-emoji">{{ demoWord.emoji }}</div>
                 <div class="demo-word">
                   <span class="text-done">{{ demoInput }}</span><span class="text-rest">{{ demoRemain }}</span>
                 </div>
                 <div class="demo-trans">{{ demoWord.trans }}</div>
                 <div v-if="demoDone" class="demo-success">
-                  <span>🎉 完成！按空格继续</span>
+                  <span>🎉 完成！</span>
                 </div>
                 <div class="demo-progress">
                   <span
@@ -553,19 +543,6 @@ useSeoMeta({
   overflow: hidden;
   outline: none;
   transition: all .25s;
-}
-.demo-card.focused {
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 6px rgba(255, 107, 107, 0.15), var(--ft-shadow-lg);
-}
-.demo-card.shake {
-  animation: shake 0.4s both;
-}
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-4px); }
 }
 .demo-header {
   display: flex;
