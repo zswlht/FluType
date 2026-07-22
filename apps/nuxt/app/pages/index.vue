@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { APP_NAME, GITHUB, Origin } from '@typewords/core/config/env.ts'
+import { APP_NAME, GITHUB, Origin, ENV } from '@typewords/core/config/env.ts'
 import { BaseIcon } from '@typewords/base'
 import { getSystemTheme, listenToSystemThemeChange, setTheme, swapTheme } from '@typewords/core/hooks/theme.ts'
 
@@ -33,6 +33,61 @@ function startBlink() {
   }, 530)
 }
 
+// ── 音频系统 ──
+// 背景音乐 + 键盘打字音效
+// 浏览器自动播放策略：必须用户交互后才能播放，所以默认静音，用户点击开关后才开始
+let bgMusicOn = $ref(false)
+let bgMusicEl: HTMLAudioElement | null = null
+// 键盘音效：复用项目的机械键盘 mp3，预加载 4 份支持快速连打
+let keyAudioPool: HTMLAudioElement[] = []
+let keyAudioIdx = 0
+
+function initAudio() {
+  if (bgMusicEl) return
+  // 背景音乐：轻快舒缓的循环曲
+  bgMusicEl = new Audio()
+  bgMusicEl.src = 'https://cdn.pixabay.com/audio/2022/03/15/audio_8e9a3d3d3a.mp3'
+  bgMusicEl.loop = true
+  bgMusicEl.volume = 0.15
+  bgMusicEl.preload = 'auto'
+
+  // 键盘音效池：4 份机械键盘音，快速打字时能重叠播放
+  const keyUrl = ENV.RESOURCE_URL + '/sound/key-sounds/jixie/机械0.mp3'
+  for (let i = 0; i < 4; i++) {
+    const a = new Audio(keyUrl)
+    a.volume = 0.35
+    a.preload = 'auto'
+    keyAudioPool.push(a)
+  }
+}
+
+function playKeySound() {
+  if (!bgMusicOn || keyAudioPool.length === 0) return
+  const a = keyAudioPool[keyAudioIdx]
+  keyAudioIdx = (keyAudioIdx + 1) % keyAudioPool.length
+  a.currentTime = 0
+  a.play().catch(() => {})
+}
+
+function toggleBgMusic() {
+  initAudio()
+  if (!bgMusicEl) return
+  bgMusicOn = !bgMusicOn
+  if (bgMusicOn) {
+    bgMusicEl.play().catch(() => {})
+  } else {
+    bgMusicEl.pause()
+  }
+}
+
+onUnmounted(() => {
+  if (bgMusicEl) {
+    bgMusicEl.pause()
+    bgMusicEl = null
+  }
+  keyAudioPool = []
+})
+
 // 打字演示（自动循环）
 const demoWords = $computed(() => [
   { word: 'hello', emoji: '👋', trans: '你好' },
@@ -58,7 +113,7 @@ function demoNext() {
   demoIdx = (demoIdx + 1) % demoWords.length
 }
 
-// 自动逐字输入演示
+// 自动逐字输入演示（每次输入一个字符播放键盘音效）
 function autoTypeStep() {
   if (demoDone) {
     demoTimer = setTimeout(() => { demoNext(); autoTypeStep() }, 1500)
@@ -67,6 +122,7 @@ function autoTypeStep() {
   const target = demoWord.word
   if (demoInput.length < target.length) {
     demoInput += target[demoInput.length]
+    playKeySound()
     demoTimer = setTimeout(autoTypeStep, 280)
   } else {
     demoDone = true
@@ -152,6 +208,10 @@ useSeoMeta({
         </nav>
 
         <div class="ml-auto flex items-center gap-2">
+          <BaseIcon :title="bgMusicOn ? '关闭音乐和音效' : '开启音乐和音效'" @click="toggleBgMusic">
+            <span v-if="bgMusicOn" class="text-[1rem]">🔊</span>
+            <span v-else class="text-[1rem]">🔇</span>
+          </BaseIcon>
           <BaseIcon :title="$t('toggle_theme')" @click="toggleTheme">
             <IconFluentWeatherMoon16Regular v-if="theme === 'light'" />
             <IconFluentWeatherSunny16Regular v-else />
