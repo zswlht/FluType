@@ -337,7 +337,28 @@ onUnmounted(() => {
   document.removeEventListener('visibilitychange', onvisibilitychange)
 })
 
-const { data: recommendDictList, isFetching } = useFetch(resourceWrap(DICT_LIST.SENTENCE.RECOMMENDED)).json()
+// 推荐区：远程 recommend_sentence.json 已 404，改为从 article.json 复用新概念英语 1-4
+// （与 sentence-list.vue 一致，用 sourceArticle: true 标记走文章转句子流程）
+const { data: recommendDictList, isFetching } = useFetch(resourceWrap(DICT_LIST.ARTICLE.ALL), { server: false }).json()
+const recommendList = $computed<any[]>(() => {
+  const list = (recommendDictList.value || []) as any[]
+  return list
+    .filter(v => Array.isArray(v?.tags) && v.tags.includes('新概念英语') && !v.hidden)
+    .map(v => ({
+      id: v.id,
+      enName: v.enName,
+      name: v.name,
+      description: v.description,
+      category: v.category,
+      tags: v.tags,
+      url: v.url,
+      length: v.length,
+      language: v.language,
+      translateLanguage: v.translateLanguage,
+      cover: v.cover,
+      sourceArticle: true,
+    }))
+})
 </script>
 
 <template>
@@ -536,7 +557,7 @@ const { data: recommendDictList, isFetching } = useFetch(resourceWrap(DICT_LIST.
           :is-add="false"
           quantifier="句"
           :item="item as any"
-          v-for="(item, j) in recommendDictList"
+          v-for="(item, j) in recommendList"
           @click="goDictDetail(item as any)"
         />
       </div>
