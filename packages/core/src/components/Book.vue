@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Dict } from '../types'
 import { Checkbox, Progress } from '@typewords/base'
-import { withAppBaseURL } from '../utils/base-url'
 
 interface IProps {
   item?: Partial<Dict>
@@ -33,9 +32,21 @@ const studyProgress = $computed(() => {
   return props.item?.lastLearnIndex ? props.item?.lastLearnIndex + '/' : ''
 })
 
+// withAppBaseURL 在 SSG 运行时可能取不到正确的 baseURL，这里用 Vite 构建时
+// 静态替换的 import.meta.env.BASE_URL 作为可靠兜底，确保子路径部署下封面能拼对路径
+let coverLoadFailed = $ref(false)
 const coverSrc = $computed(() => {
-  return props.item?.cover ? withAppBaseURL(props.item.cover) : ''
+  const cover = props.item?.cover
+  if (!cover) return ''
+  if (/^[a-z][a-z\d+.-]*:/i.test(cover) || cover.startsWith('//')) return cover
+  if (!cover.startsWith('/')) return cover
+  const base = import.meta.env.BASE_URL || '/'
+  if (base === '/') return cover
+  const basePath = base.endsWith('/') ? base.slice(0, -1) : base
+  if (cover === basePath || cover.startsWith(basePath + '/')) return cover
+  return basePath + cover
 })
+const showCover = $computed(() => props.item?.cover && !coverLoadFailed)
 
 // 与暖色奶油主题协调的渐变色板，根据书名 hash 分配稳定颜色
 const gradientPalettes = [
@@ -52,7 +63,8 @@ const gradientPalettes = [
 ]
 
 const gradientStyle = $computed(() => {
-  if (props.item?.cover) return null
+  // 有封面且未加载失败时不使用渐变背景（让图片显示）
+  if (showCover.value) return null
   const name = props.item?.name || props.item?.enName || String(props.item?.id ?? '')
   let hash = 0
   for (let i = 0; i < name.length; i++) {
@@ -80,7 +92,7 @@ function handleClick(e: MouseEvent) {
       :class="[showCheckbox && 'book-selectable', (selected || checked) && 'book-selected']"
       :style="gradientStyle"
     >
-      <img class="absolute top-0 left-0 w-full h-full object-cover" v-if="item?.cover" :src="coverSrc" alt="" />
+      <img class="absolute top-0 left-0 w-full h-full object-cover" v-if="showCover" :src="coverSrc" alt="" @error="coverLoadFailed = true" />
       <template v-else>
         <div class="absolute inset-0 flex flex-col items-center justify-center p-2 text-center">
           <div class="text-base font-bold leading-tight text-white break-all" style="text-shadow: 0 1px 4px rgba(0,0,0,0.35)">{{ item?.name }}</div>
@@ -109,7 +121,7 @@ function handleClick(e: MouseEvent) {
       <!--      <div class="custom bg-red! color-white z-1" v-else-if="item.update">更新中</div>-->
       <!--      <div class="sync bg-red! color-white z-1" v-if="!item.sync && isUser && !showCheckbox">未同步</div>-->
     </div>
-    <div class="flex justify-between text-base mt-1" v-if="item?.cover">
+    <div class="flex justify-between text-base mt-1" v-if="showCover">
       <div class="w-6/10 truncate">{{ item?.name }}</div>
       <div>{{ studyProgress }}{{ item?.length }}{{ quantifier }}</div>
     </div>
