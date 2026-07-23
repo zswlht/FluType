@@ -4,6 +4,7 @@ import { BaseIcon } from '@typewords/base'
 import CommonSetting from './CommonSetting.vue'
 import WordSetting from './WordSetting.vue'
 import ArticleSetting from './ArticleSetting.vue'
+import SentenceSetting from './SentenceSetting.vue'
 import SoundSetting from './SoundSetting.vue'
 import { useDisableEventListener } from '@typewords/utils'
 
@@ -19,7 +20,8 @@ const emit = defineEmits<{
   (e: 'open'): void
 }>()
 
-let tabIndex = $ref(props.type === 'word' ? 1 : props.type === 'sentence' ? 1 : 2)
+// 句子模式默认打开句子设置 tab（4），文章模式默认打开文章设置 tab（2），单词模式默认打开单词设置 tab（1）
+let tabIndex = $ref(props.type === 'word' ? 1 : props.type === 'sentence' ? 4 : 2)
 let show = $ref(false)
 
 useDisableEventListener(() => show)
@@ -43,9 +45,13 @@ defineExpose({ openSoundTab })
               <IconFluentTextUnderlineDouble20Regular width="20" />
               <span>{{ $t('word_settings') }}</span>
             </div>
-            <div class="tab" :class="tabIndex === 2 && 'active'" @click="tabIndex = 2" v-if="type === 'article' || type === 'sentence'">
+            <div class="tab" :class="tabIndex === 2 && 'active'" @click="tabIndex = 2" v-if="type === 'article'">
               <IconFluentBookLetter20Regular width="20" />
               <span>{{ $t('article_settings') }}</span>
+            </div>
+            <div class="tab" :class="tabIndex === 4 && 'active'" @click="tabIndex = 4" v-if="type === 'sentence'">
+              <IconFluentChatMultiple20Regular width="20" />
+              <span>{{ $t('sentence_settings') }}</span>
             </div>
             <div class="tab" :class="tabIndex === 0 && 'active'" @click="tabIndex = 0">
               <IconFluentSettings20Regular width="20" />
@@ -61,6 +67,7 @@ defineExpose({ openSoundTab })
           <CommonSetting v-if="tabIndex === 0" />
           <WordSetting v-if="tabIndex === 1" />
           <ArticleSetting v-if="tabIndex === 2" />
+          <SentenceSetting v-if="tabIndex === 4" />
           <SoundSetting v-if="tabIndex === 3" />
         </div>
       </div>
@@ -71,7 +78,7 @@ defineExpose({ openSoundTab })
     @click="
       () => {
         show = true
-        tabIndex = props.initialTab ?? (props.type === 'article' ? 2 : 1)
+        tabIndex = props.initialTab ?? (props.type === 'article' ? 2 : props.type === 'sentence' ? 4 : 1)
       }
     "
   >
