@@ -16,6 +16,9 @@ onMounted(() => {
   theme = getSystemTheme()
   setTheme(theme)
   startBlink()
+  // 注册首次交互监听，用户点击/按键后自动播放音乐和音效
+  document.addEventListener('pointerdown', onFirstInteraction)
+  document.addEventListener('keydown', onFirstInteraction)
 })
 
 function toggleTheme() {
@@ -35,12 +38,14 @@ function startBlink() {
 
 // ── 音频系统 ──
 // 背景音乐 + 键盘打字音效
-// 浏览器自动播放策略：必须用户交互后才能播放，所以默认静音，用户点击开关后才开始
-let bgMusicOn = $ref(false)
+// 默认开启，但浏览器自动播放策略要求用户首次交互后才能真正播放
+let bgMusicOn = $ref(true)
 let bgMusicEl: HTMLAudioElement | null = null
 // 键盘音效：复用项目的机械键盘 mp3，预加载 4 份支持快速连打
 let keyAudioPool: HTMLAudioElement[] = []
 let keyAudioIdx = 0
+// 标记音频是否已初始化（首次交互后才会初始化）
+let audioInitialized = $ref(false)
 
 function initAudio() {
   if (bgMusicEl) return
@@ -59,6 +64,7 @@ function initAudio() {
     a.preload = 'auto'
     keyAudioPool.push(a)
   }
+  audioInitialized = true
 }
 
 function playKeySound() {
@@ -80,12 +86,33 @@ function toggleBgMusic() {
   }
 }
 
+// 监听用户首次交互（任意点击/按键），自动初始化并播放音频
+// 满足浏览器自动播放策略：必须有用户交互才能播放声音
+function onFirstInteraction() {
+  if (audioInitialized) {
+    // 已初始化，若处于开启状态但被暂停（如浏览器策略导致），尝试恢复
+    if (bgMusicOn && bgMusicEl && bgMusicEl.paused) {
+      bgMusicEl.play().catch(() => {})
+    }
+    return
+  }
+  initAudio()
+  if (bgMusicOn && bgMusicEl) {
+    bgMusicEl.play().catch(() => {})
+  }
+  // 首次交互后移除监听，避免重复触发
+  document.removeEventListener('pointerdown', onFirstInteraction)
+  document.removeEventListener('keydown', onFirstInteraction)
+}
+
 onUnmounted(() => {
   if (bgMusicEl) {
     bgMusicEl.pause()
     bgMusicEl = null
   }
   keyAudioPool = []
+  document.removeEventListener('pointerdown', onFirstInteraction)
+  document.removeEventListener('keydown', onFirstInteraction)
 })
 
 // 打字演示（自动循环）
