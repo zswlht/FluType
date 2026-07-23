@@ -37,6 +37,32 @@ const coverSrc = $computed(() => {
   return props.item?.cover ? withAppBaseURL(props.item.cover) : ''
 })
 
+// 与暖色奶油主题协调的渐变色板，根据书名 hash 分配稳定颜色
+const gradientPalettes = [
+  'linear-gradient(135deg, #ff6b6b, #ee5a6f)',
+  'linear-gradient(135deg, #ffd166, #ff6b6b)',
+  'linear-gradient(135deg, #06beb6, #48b1bf)',
+  'linear-gradient(135deg, #fa709a, #fee140)',
+  'linear-gradient(135deg, #ff9a9e, #fad0c4)',
+  'linear-gradient(135deg, #ff758c, #ff7eb3)',
+  'linear-gradient(135deg, #84fab0, #8fd3f4)',
+  'linear-gradient(135deg, #ffecd2, #fcb69f)',
+  'linear-gradient(135deg, #a18cd1, #fbc2eb)',
+  'linear-gradient(135deg, #f093fb, #f5576c)',
+]
+
+const gradientStyle = $computed(() => {
+  if (props.item?.cover) return null
+  const name = props.item?.name || props.item?.enName || String(props.item?.id ?? '')
+  let hash = 0
+  for (let i = 0; i < name.length; i++) {
+    hash = ((hash << 5) - hash) + name.charCodeAt(i)
+    hash |= 0
+  }
+  const idx = Math.abs(hash) % gradientPalettes.length
+  return { background: gradientPalettes[idx] }
+})
+
 function handleClick(e: MouseEvent) {
   if (props.showCheckbox) {
     e.stopPropagation()
@@ -52,12 +78,18 @@ function handleClick(e: MouseEvent) {
     <div
       class="book overflow-hidden relative"
       :class="[showCheckbox && 'book-selectable', (selected || checked) && 'book-selected']"
+      :style="gradientStyle"
     >
-      <img class="absolute top-0 left-0 w-full object-cover" v-if="item?.cover" :src="coverSrc" alt="" />
-      <div class="text-base mt-1" v-else>{{ item?.name }}</div>
-      <div class="absolute bottom-4 right-3 z-1" v-if="!item?.cover">
-        <div>{{ studyProgress }}{{ item?.length }}{{ quantifier }}</div>
-      </div>
+      <img class="absolute top-0 left-0 w-full h-full object-cover" v-if="item?.cover" :src="coverSrc" alt="" />
+      <template v-else>
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-2 text-center">
+          <div class="text-base font-bold leading-tight text-white break-all" style="text-shadow: 0 1px 4px rgba(0,0,0,0.35)">{{ item?.name }}</div>
+          <div v-if="item?.category" class="mt-2 text-xs text-white/85 px-2 py-0.5 rounded-full bg-black/15">{{ item?.category }}</div>
+        </div>
+        <div class="absolute bottom-4 right-3 z-1">
+          <div class="text-white/90 text-sm">{{ studyProgress }}{{ item?.length }}{{ quantifier }}</div>
+        </div>
+      </template>
       <div class="absolute bottom-2 left-3 right-3">
         <Progress
           v-if="item?.lastLearnIndex && showProgress"
