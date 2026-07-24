@@ -24,6 +24,7 @@ import { useWordOptions } from '../../hooks/dict.ts'
 import { openWordCollectPicker } from '../../hooks/useWordCollectPicker.ts'
 import { ref } from 'vue'
 import TranslationList from './TranslationList.vue'
+import WordEtymology from './WordEtymology.vue'
 import { useOnKeyboardEventListener } from '../../hooks/event.ts'
 
 const SENTENCE_PLAY_SHORTCUT_KEYS = [
@@ -1100,36 +1101,16 @@ defineExpose({
           settingStore.showEtymologyAndRelWords
         "
       >
-        <template v-if="word?.etymology?.length">
+        <template v-if="word?.etymology?.length || word?.relWords?.rels?.length">
           <div class="line-white my-3"></div>
           <div class="flex">
             <div class="label">{{ $t('etymology') }}</div>
-            <div class="text-base">
-              <div class="mb-2" v-for="item in word.etymology">
-                <div class="">{{ item.t }}</div>
-                <div class="">{{ item.d }}</div>
-              </div>
-            </div>
-          </div>
-          <!--        <div class="line-white my-2"></div>-->
-        </template>
-
-        <template v-if="word?.relWords?.root">
-          <div class="flex">
-            <div class="label">{{ $t('related_words') }}</div>
-            <div class="flex flex-col gap-3">
-              <div v-if="word.relWords.root" class=" ">
-                {{ $t('word_root') }}：<ClickableWord class="en" :word="word.relWords.root" />
-              </div>
-              <div class="flex" v-for="item in word.relWords.rels">
-                <div class="pos">{{ item.pos }}</div>
-                <div>
-                  <div class="flex items-center gap-4" v-for="itemj in item.words">
-                    <ClickableWord class="en" :word="itemj.c" />
-                    <div class="cn">{{ itemj.cn }}</div>
-                  </div>
-                </div>
-              </div>
+            <div class="flex-1">
+              <WordEtymology
+                :etymology="word.etymology"
+                :rel-words="word.relWords"
+                :word="word.word"
+              />
             </div>
           </div>
         </template>

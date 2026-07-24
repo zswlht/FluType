@@ -154,7 +154,7 @@ export const getDefaultSettingState = (): SettingState => ({
   identifyMethod: IdentifyMethod.SelfAssessment,
   _ignoreWatch: false,
   ttsVoiceMap: [],
-  showEtymologyAndRelWords: false,
+  showEtymologyAndRelWords: true,
 })
 
 export const useSettingStore = defineStore('setting', {
