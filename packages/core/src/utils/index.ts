@@ -33,6 +33,7 @@ import { get } from 'idb-keyval'
 import { nanoid } from 'nanoid'
 import { saveHashSnapshot } from '../composables/useDataSyncPersistence'
 import { withAppBaseURL } from './base-url'
+export { withAppBaseURL }
 
 dayjs.extend(duration)
 

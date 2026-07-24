@@ -52,7 +52,7 @@ const { locales, setLocale } = useI18n()
 const route = useRoute()
 
 const showIcon = $computed(() => {
-  return ['/words', '/articles', '/sentences', '/setting', '/help', '/doc', '/feedback'].includes(route.path)
+  return ['/words', '/articles', '/sentences', '/roots', '/root', '/setting', '/help', '/doc', '/feedback'].includes(route.path)
 })
 
 onMounted(() => {
@@ -80,6 +80,10 @@ onMounted(() => {
         <NuxtLink to="/sentences" class="row">
           <IconFluentChatMultiple20Regular />
           <span>{{ $t('sentences') }}</span>
+        </NuxtLink>
+        <NuxtLink to="/roots" class="row">
+          <IconFluentPuzzleCube20Regular />
+          <span>{{ $t('word_roots') }}</span>
         </NuxtLink>
         <NuxtLink to="/setting" class="row">
           <IconFluentSettings20Regular />
@@ -133,6 +137,10 @@ onMounted(() => {
         <div class="nav-item" @click="router.push('/sentences')" :class="{ active: route.path?.includes('/sentences') }">
           <IconFluentChatMultiple20Regular />
           <span>{{ $t('sentences') }}</span>
+        </div>
+        <div class="nav-item" @click="router.push('/roots')" :class="{ active: route.path?.includes('/roots') || route.path?.includes('/root') }">
+          <IconFluentPuzzleCube20Regular />
+          <span>{{ $t('word_roots') }}</span>
         </div>
         <div class="nav-item" @click="router.push('/setting')" :class="{ active: route.path === '/setting' }">
           <IconFluentSettings20Regular />
