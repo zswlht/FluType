@@ -43,20 +43,25 @@ function getDocumentBaseURL() {
     return undefined
   }
 
+  const nuxtScriptSrc =
+    document.querySelector<HTMLScriptElement>('script[src*="/_nuxt/"]')?.getAttribute('src') ||
+    document.querySelector<HTMLScriptElement>('script[src*="/_nuxt/"]')?.src
+  const scriptBaseURL = getBaseURLFromAssetPath(nuxtScriptSrc, '/_nuxt/')
+
+  if (scriptBaseURL && scriptBaseURL !== '/') {
+    return scriptBaseURL
+  }
+
   const manifestHref =
     document.querySelector<HTMLLinkElement>('link[rel="manifest"]')?.getAttribute('href') ||
     document.querySelector<HTMLLinkElement>('link[rel="manifest"]')?.href
   const manifestBaseURL = getBaseURLFromAssetPath(manifestHref, '/manifest.json')
 
-  if (manifestBaseURL) {
+  if (manifestBaseURL && manifestBaseURL !== '/') {
     return manifestBaseURL
   }
 
-  const nuxtScriptSrc =
-    document.querySelector<HTMLScriptElement>('script[src*="/_nuxt/"]')?.getAttribute('src') ||
-    document.querySelector<HTMLScriptElement>('script[src*="/_nuxt/"]')?.src
-
-  return getBaseURLFromAssetPath(nuxtScriptSrc, '/_nuxt/')
+  return scriptBaseURL || manifestBaseURL
 }
 
 export function normalizeBaseURL(baseURL: string = '/') {
