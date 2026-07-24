@@ -225,6 +225,13 @@ export async function checkAndUpgradeSaveSetting(val: any) {
         updateLocalData = true
       }
 
+      //23版本：默认开启词源和相关词显示（之前默认关闭，现在词库已有完整数据）
+      if (version <= 22) {
+        // 强制覆盖用户旧值，避免 checkRiskKey 又把 false 合并回来
+        state.showEtymologyAndRelWords = true
+        updateLocalData = true
+      }
+
       // @ts-ignore
       delete state.shortcutKeyMap
       checkRiskKey(defaultState, state)
